@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head><title>GenAI PDF Analyzer</title></head>
+<body>
+  <h1>Upload PDFs and Define Persona</h1>
+  <form action="/analyze" method="post" enctype="multipart/form-data">
+    <label>Upload PDFs:</label><br>
+    <input type="file" name="pdfs" multiple required><br><br>
+    <label>Persona:</label><br>
+    <input type="text" name="persona" required><br><br>
+    <label>Job To Be Done:</label><br>
+    <input type="text" name="job" required><br><br>
+    <input type="submit" value="Analyze">
+  </form>
+</body>
+</html>
