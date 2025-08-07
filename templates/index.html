@@ -1,97 +1,33 @@
-{% extends "base.html" %}
-
-{% block content %}
-<div class="container mt-4">
-    <div class="row justify-content-center">
-        <div class="col-lg-8">
-            <!-- Header -->
-            <div class="text-center mb-5">
-                <h1 class="display-4 text-primary mb-3">
-                    <i class="fas fa-search me-3"></i>
-                    PDF Information Extractor
-                </h1>
-                <p class="lead text-muted">
-                    Upload PDF documents and ask questions to extract specific information
-                </p>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Financial Document Q&A Assistant</title>
+    <style>
+        body { font-family: Arial; padding: 2em; background: #f4f4f4; }
+        form { background: #fff; padding: 2em; border-radius: 10px; max-width: 600px; margin: auto; }
+        input, textarea { width: 100%; margin-bottom: 1em; padding: 0.5em; }
+        input[type="submit"] { background: #0056b3; color: white; border: none; cursor: pointer; }
+        .answer { background: #e0ffe0; padding: 1em; border-radius: 8px; margin-top: 1em; }
+        .source { font-size: 0.9em; color: #333; }
+    </style>
+</head>
+<body>
+    <form method="POST" enctype="multipart/form-data">
+        <h2>Ask Questions on Financial PDFs or CSVs</h2>
+        <input type="file" name="file" required />
+        <textarea name="query" placeholder="Enter your question here..." required></textarea>
+        <input type="submit" value="Get Answer">
+        {% if answer %}
+            <div class="answer">
+                <strong>Answer:</strong> {{ answer }}
             </div>
-
-            <!-- Upload Form -->
-            <div class="card shadow-lg border-0">
-                <div class="card-header bg-primary text-white">
-                    <h4 class="mb-0">
-                        <i class="fas fa-upload me-2"></i>
-                        Upload & Query
-                    </h4>
-                </div>
-                <div class="card-body p-4">
-                    <form id="uploadForm" enctype="multipart/form-data">
-                        <!-- File Upload Section -->
-                        <div class="mb-4">
-                            <label for="files" class="form-label fw-bold">
-                                <i class="fas fa-file-pdf me-2 text-danger"></i>
-                                Select PDF Files
-                            </label>
-                            <input type="file" class="form-control form-control-lg" id="files" name="files[]" 
-                                   accept=".pdf" multiple required>
-                            <div class="form-text">
-                                <i class="fas fa-info-circle me-1"></i>
-                                You can select multiple PDF files (max 50MB each)
-                            </div>
-                        </div>
-
-                        <!-- Query Section -->
-                        <div class="mb-4">
-                            <label for="query" class="form-label fw-bold">
-                                <i class="fas fa-question-circle me-2 text-info"></i>
-                                What information are you looking for?
-                            </label>
-                            <textarea class="form-control form-control-lg" id="query" name="query" rows="3" 
-                                      placeholder="e.g., What are the best restaurants mentioned? Travel tips for college students? Cultural attractions in Italy?" required></textarea>
-                            <div class="form-text">
-                                <i class="fas fa-lightbulb me-1"></i>
-                                Be specific about what you want to extract from the PDFs
-                            </div>
-                        </div>
-
-                        <!-- Submit Button -->
-                        <div class="d-grid">
-                            <button type="submit" class="btn btn-primary btn-lg" id="submitBtn">
-                                <i class="fas fa-magic me-2"></i>
-                                Extract Information
-                            </button>
-                        </div>
-                    </form>
-                </div>
+            {% if source %}
+            <div class="source">
+                <strong>From:</strong> {{ source.section_title }} ({{ source.document }})<br>
+                Page: {{ source.page_number }}
             </div>
-
-            <!-- Progress Section -->
-            <div id="progressSection" class="mt-4" style="display: none;">
-                <div class="card border-info">
-                    <div class="card-body">
-                        <div class="d-flex align-items-center">
-                            <div class="spinner-border text-info me-3" role="status">
-                                <span class="visually-hidden">Loading...</span>
-                            </div>
-                            <div>
-                                <h6 class="mb-1">Processing your request...</h6>
-                                <small class="text-muted">This may take a few moments depending on file size</small>
-                            </div>
-                        </div>
-                        <div class="progress mt-3">
-                            <div class="progress-bar progress-bar-striped progress-bar-animated" 
-                                 role="progressbar" style="width: 100%"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Results Section -->
-            <div id="resultsSection" class="mt-4" style="display: none;">
-                <div class="card shadow-lg border-0">
-                    <div class="card-header bg-success text-white">
-                        <h4 class="mb-0">
-                            <i class="fas fa-check-circle me-2"></i>
-                            Extracted Information
-                        </h4>
-                    </div>
-                    <div class="card-body">
+            {% endif %}
+        {% endif %}
+    </form>
+</body>
+</html>
