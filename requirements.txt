@@ -1,0 +1,8 @@
+streamlit
+groq
+pandas
+plotly
+python-dotenv
+yfinance
+numpy
+scikit-learn
